@@ -10,6 +10,7 @@
 #include <string>
 #include <fstream>
 #include <iostream>
+#include <iomanip>
 using namespace std;
 void lee_archivo(string, double * , int *);
 void escribe_archivo(string, double *, int *, int *);
@@ -17,14 +18,17 @@ int main()
 {
 	double *dat, data[80000];
 	string filename;
-	int *fils, *sel, control[100],  filas[100], i, j, ndatos, ntot,  k = 0, s = 1, tt, select[4] = {0, 1, 0, 1};
+	int *fils, *sel, control[100],  filas[100], i, j, ndatos, ntot,  k = 0, s = 1, tt, select[4] = {1, 0, 0, 1};
 	sel = select;
 	dat = data;
 	fils = filas;
-	lee_archivo("X06 OPEN 2X2 CR PinPoint.CD2", dat, fils);
+	filename = "/home/raul/Documentos/Commissioning/Eclipse Beam Data/X06_MLC/0600DPR.asc";
+	lee_archivo(filename, dat, fils);
+	//lee_archivo("X06 OPEN 2X2 CR PinPoint.CD2", dat, fils);
 	//cout << "Entre el nombre del archivo de salida  " ;
 	//getline(cin, filename);
 	dat = data;
+
 	escribe_archivo("salida.txt", dat, fils, sel);
 	ndatos = filas[0];
 	control[0] = 0;
@@ -121,7 +125,7 @@ void escribe_archivo(string filename, double *datos, int *nfils, int *sel)
 			for (j = 0; j < 4; j++){
 				if (select[j]){
 					if (i > filas[d]) pa << "	" << " " ;
-					else pa << data[i][j][d] << "	";
+					else pa << showpos << setprecision(1) << fixed << data[i][j][d] << "	";
 				}
 				 
 			 }
